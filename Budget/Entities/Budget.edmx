@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BudgetModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="BudgetModelStoreContainer">
+          <EntitySet Name="Account" EntityType="BudgetModel.Store.Account" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="BudgetModel.Store.Category" store:Type="Tables" />
+          <EntitySet Name="Payee" EntityType="BudgetModel.Store.Payee" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="BudgetModel.Store.Transaction" store:Type="Tables" />
+          <EntitySet Name="TransactionCategory" EntityType="BudgetModel.Store.TransactionCategory" store:Type="Tables" />
+          <AssociationSet Name="FK_Transaction_Account" Association="BudgetModel.Store.FK_Transaction_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Payee" Association="BudgetModel.Store.FK_Transaction_Payee">
+            <End Role="Payee" EntitySet="Payee" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionCategory_Category" Association="BudgetModel.Store.FK_TransactionCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="TransactionCategory" EntitySet="TransactionCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionCategory_Transaction" Association="BudgetModel.Store.FK_TransactionCategory_Transaction">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="TransactionCategory" EntitySet="TransactionCategory" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Budgeted" Type="float" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payee">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Payee" Type="uniqueidentifier" />
+          <Property Name="Amount" Type="float" />
+          <Property Name="Account" Type="uniqueidentifier" />
+          <Property Name="Notes" Type="ntext" />
+          <Property Name="CheckNumber" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TransactionCategory">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Transaction" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Category" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Amount" Type="float" />
+        </EntityType>
+        <Association Name="FK_Transaction_Account">
+          <End Role="Account" Type="BudgetModel.Store.Account" Multiplicity="0..1" />
+          <End Role="Transaction" Type="BudgetModel.Store.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Payee">
+          <End Role="Payee" Type="BudgetModel.Store.Payee" Multiplicity="0..1" />
+          <End Role="Transaction" Type="BudgetModel.Store.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payee">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="Payee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionCategory_Category">
+          <End Role="Category" Type="BudgetModel.Store.Category" Multiplicity="1" />
+          <End Role="TransactionCategory" Type="BudgetModel.Store.TransactionCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="TransactionCategory">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionCategory_Transaction">
+          <End Role="Transaction" Type="BudgetModel.Store.Transaction" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TransactionCategory" Type="BudgetModel.Store.TransactionCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="TransactionCategory">
+              <PropertyRef Name="Transaction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BudgetModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BudgetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="BudgetModel.Account" />
+          <EntitySet Name="Categories" EntityType="BudgetModel.Category" />
+          <EntitySet Name="Payees" EntityType="BudgetModel.Payee" />
+          <EntitySet Name="Transactions" EntityType="BudgetModel.Transaction" />
+          <EntitySet Name="TransactionCategories" EntityType="BudgetModel.TransactionCategory" />
+          <AssociationSet Name="FK_Transaction_Account" Association="BudgetModel.FK_Transaction_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionCategory_Category" Association="BudgetModel.FK_TransactionCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="TransactionCategory" EntitySet="TransactionCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Payee" Association="BudgetModel.FK_Transaction_Payee">
+            <End Role="Payee" EntitySet="Payees" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionCategory_Transaction" Association="BudgetModel.FK_TransactionCategory_Transaction">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="TransactionCategory" EntitySet="TransactionCategories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Transactions" Relationship="BudgetModel.FK_Transaction_Account" FromRole="Account" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Budgeted" Type="Double" Nullable="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TransactionCategories" Relationship="BudgetModel.FK_TransactionCategory_Category" FromRole="Category" ToRole="TransactionCategory" />
+        </EntityType>
+        <EntityType Name="Payee">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Transactions" Relationship="BudgetModel.FK_Transaction_Payee" FromRole="Payee" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Payee" Type="Guid" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="Account" Type="Guid" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CheckNumber" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Account1" Relationship="BudgetModel.FK_Transaction_Account" FromRole="Transaction" ToRole="Account" />
+          <NavigationProperty Name="Payee1" Relationship="BudgetModel.FK_Transaction_Payee" FromRole="Transaction" ToRole="Payee" />
+          <NavigationProperty Name="TransactionCategories" Relationship="BudgetModel.FK_TransactionCategory_Transaction" FromRole="Transaction" ToRole="TransactionCategory" />
+        </EntityType>
+        <EntityType Name="TransactionCategory">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Transaction" Type="Guid" Nullable="false" />
+          <Property Name="Category" Type="Guid" Nullable="false" />
+          <Property Name="Amount" Type="Double" />
+          <NavigationProperty Name="Category1" Relationship="BudgetModel.FK_TransactionCategory_Category" FromRole="TransactionCategory" ToRole="Category" />
+          <NavigationProperty Name="Transaction1" Relationship="BudgetModel.FK_TransactionCategory_Transaction" FromRole="TransactionCategory" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="FK_Transaction_Account">
+          <End Role="Account" Type="BudgetModel.Account" Multiplicity="0..1" />
+          <End Role="Transaction" Type="BudgetModel.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionCategory_Category">
+          <End Role="Category" Type="BudgetModel.Category" Multiplicity="1" />
+          <End Role="TransactionCategory" Type="BudgetModel.TransactionCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="TransactionCategory">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Payee">
+          <End Role="Payee" Type="BudgetModel.Payee" Multiplicity="0..1" />
+          <End Role="Transaction" Type="BudgetModel.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payee">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="Payee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionCategory_Transaction">
+          <End Role="Transaction" Type="BudgetModel.Transaction" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TransactionCategory" Type="BudgetModel.TransactionCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="Guid" />
+            </Principal>
+            <Dependent Role="TransactionCategory">
+              <PropertyRef Name="Transaction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BudgetModelStoreContainer" CdmEntityContainer="BudgetEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="BudgetModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BudgetModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Budgeted" ColumnName="Budgeted" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payees">
+            <EntityTypeMapping TypeName="BudgetModel.Payee">
+              <MappingFragment StoreEntitySet="Payee">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="BudgetModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Payee" ColumnName="Payee" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CheckNumber" ColumnName="CheckNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionCategories">
+            <EntityTypeMapping TypeName="BudgetModel.TransactionCategory">
+              <MappingFragment StoreEntitySet="TransactionCategory">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Transaction" ColumnName="Transaction" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

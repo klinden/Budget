@@ -1,0 +1,34 @@
+﻿<Window x:Class="Budget.TransactionEntryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Transaction" Height="579" Width="450" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid>
+        <Label Content="Date" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="lbDate" VerticalAlignment="Top" />
+        <DatePicker Height="25" HorizontalAlignment="Left" Margin="73,10,0,0" Name="dpDate" VerticalAlignment="Top" Width="115" SelectedDateChanged="dpDate_SelectedDateChanged" />
+        <Label Content="To/From" Height="28" HorizontalAlignment="Left" Margin="12,50,0,0" Name="lbPayee" VerticalAlignment="Top" />
+        <ComboBox Height="25" HorizontalAlignment="Left" Margin="73,50,0,0" Name="cbPayee" VerticalAlignment="Top" Width="300" DisplayMemberPath="Name" SelectedValuePath="Guid" SelectionChanged="cbPayee_SelectionChanged" />
+        <Label Content="Amount" Height="28" HorizontalAlignment="Left" Margin="12,90,0,0" Name="lbAmount" VerticalAlignment="Top" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="73,90,0,0" Name="tbAmount" VerticalAlignment="Top" Width="120" />
+        <Label Content="Account" Height="28" HorizontalAlignment="Left" Margin="12,130,0,0" Name="lbAccount" VerticalAlignment="Top" />
+        <ComboBox Height="25" HorizontalAlignment="Left" Margin="73,130,0,0" Name="cbAccount" VerticalAlignment="Top" Width="300" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <Label Content="Check #" Height="28" HorizontalAlignment="Left" Margin="12,170,0,0" Name="lbCheckNumber" VerticalAlignment="Top" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="73,170,0,0" Name="tbCheckNumber" VerticalAlignment="Top" Width="80" />
+        <Label Content="Notes" Height="28" HorizontalAlignment="Left" Margin="12,210,0,0" Name="lbNotes" VerticalAlignment="Top" />
+        <TextBox Height="50" HorizontalAlignment="Left" Margin="73,210,0,0" Name="tbNotes" VerticalAlignment="Top" Width="300" TextWrapping="Wrap" MaxLength="5000" />
+        <Label Content="Budget" Height="28" HorizontalAlignment="Left" Margin="12,275,0,0" Name="lbBudget" VerticalAlignment="Top" FontWeight="Bold" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,309,0,0" Name="cbBudget1" VerticalAlignment="Top" Width="150" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,338,0,0" Name="cbBudget2" VerticalAlignment="Top" Width="150" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,367,0,0" Name="cbBudget3" VerticalAlignment="Top" Width="150" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,396,0,0" Name="cbBudget4" VerticalAlignment="Top" Width="150" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,425,0,0" Name="cbBudget5" VerticalAlignment="Top" Width="150" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,454,0,0" Name="cbBudget6" VerticalAlignment="Top" Width="150" DisplayMemberPath="Name" SelectedValuePath="Guid" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="253,309,0,0" Name="tbBudget1Amount" VerticalAlignment="Top" Width="150" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="253,338,0,0" Name="tbBudget2Amount" VerticalAlignment="Top" Width="150" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="253,367,0,0" Name="tbBudget3Amount" VerticalAlignment="Top" Width="150" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="253,396,0,0" Name="tbBudget4Amount" VerticalAlignment="Top" Width="150" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="253,425,0,0" Name="tbBudget5Amount" VerticalAlignment="Top" Width="150" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="253,454,0,0" Name="tbBudget6Amount" VerticalAlignment="Top" Width="150" />
+        <Button Content="Submit" Height="23" HorizontalAlignment="Left" Margin="213,491,0,0" Name="sbmtBtn" VerticalAlignment="Top" Width="75" Click="sbmtBtn_Click" />
+        <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="127,491,0,0" Name="cnclBtn" VerticalAlignment="Top" Width="75" Click="cnclBtn_Click" />
+    </Grid>
+</Window>

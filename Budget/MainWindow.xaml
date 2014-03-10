@@ -1,0 +1,11 @@
+﻿<Window x:Class="Budget.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button Content="View Transaction Log" Height="23" HorizontalAlignment="Left" Margin="20,23,0,0" Name="TransactionLogButton" VerticalAlignment="Top" Width="150" Click="TransactionLogButton_Click" />
+        <Button Content="Enter a transaction" Height="23" HorizontalAlignment="Left" Margin="20,63,0,0" Name="NewTransactionButton" VerticalAlignment="Top" Width="150" Click="NewTransactionButton_Click" />
+        <Button Content="Budget Status" Height="23" HorizontalAlignment="Left" Margin="20,103,0,0" Name="BudgetStatusButton" VerticalAlignment="Top" Width="150" Click="BudgetStatusButton_Click" />
+        <Button Content="Account Balances" Height="23" HorizontalAlignment="Left" Margin="20,143,0,0" Name="AccountBalancesButton" VerticalAlignment="Top" Width="150" Click="AccountBalancesButton_Click" />
+    </Grid>
+</Window>

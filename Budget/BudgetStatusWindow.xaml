@@ -1,0 +1,22 @@
+﻿<Window x:Class="Budget.BudgetStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Budget Status" Height="730" Width="500" Loaded="Window_Loaded">
+    <Grid>
+        <Button Content="Refresh" Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="RefreshButton" VerticalAlignment="Top" Width="75" Click="RefreshButton_Click" />
+        <Label Content="Start" Height="28" HorizontalAlignment="Left" Margin="125,7,0,0" Name="lbStartDate" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="166,12,0,0" Name="cbStartMonth" VerticalAlignment="Top" Width="120" />
+        <Label Content="End" Height="28" HorizontalAlignment="Left" Margin="292,7,0,0" Name="lbEndDate" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="328,12,0,0" Name="cbEndMonth" VerticalAlignment="Top" Width="120" />
+        <Label Content="Year" Height="28" HorizontalAlignment="Left" Margin="125,37,0,0" Name="lbYear" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="166,42,0,0" Name="cbYear" VerticalAlignment="Top" Width="120" />
+        <DataGrid AutoGenerateColumns="False" Height="608" HorizontalAlignment="Left" Margin="12,71,0,0" Name="dgBudgetStatus" VerticalAlignment="Top" Width="454" MouseDoubleClick="dgBudgetStatus_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=RelatedCategory.Name}" Header="Category" CanUserSort="False" />
+                <DataGridTextColumn Binding="{Binding Path=AdjustedBudgetedAmount, StringFormat=c}" Header="Amount Budgeted" CanUserSort="False" />
+                <DataGridTextColumn Binding="{Binding Path=NetGainLoss, StringFormat=c}" Header="Net Gain/Loss" CanUserSort="False" IsReadOnly="true" />
+                <DataGridTextColumn Binding="{Binding Path=AmountLeft, StringFormat=c}" Header="AmountLeft" CanUserSort="False" IsReadOnly="true" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
